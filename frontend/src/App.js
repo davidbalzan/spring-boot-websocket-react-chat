@@ -12,12 +12,12 @@ class App extends Component {
             loggedIn: false,
             messageText: null,
             userName: null,
+            messages: [],
         }
     }
 
     handleLogin = () => {
         this.setState({loggedIn: true});
-        alert('User: ' + this.state.userName);
         if (this.state.userName) {
             this.clientRef.sendMessage("/app/chat.addUser",
                 JSON.stringify({sender: this.state.userName, type: 'JOIN'}));
@@ -30,7 +30,6 @@ class App extends Component {
     }
 
     handleMessageSend = () => {
-        alert('Sending message ' + this.state.messageText);
         if (this.state.userName) {
             this.clientRef.sendMessage("/app/chat.sendMessage",
                 JSON.stringify({sender: this.state.userName, content: this.state.messageText, type: 'CHAT'}));
@@ -44,6 +43,10 @@ class App extends Component {
         });
     };
 
+    handleMessageReceived = msg => {
+        this.setState({messages: this.state.messages.concat(msg)});
+    }
+
     render() {
         const visibleLoginForm = !this.state.loggedIn;
         const visibleLogout = this.state.loggedIn;
@@ -52,9 +55,7 @@ class App extends Component {
             <React.Fragment>
                 <CssBaseline/>
                 <SockJsClient url='http://localhost:3000/ws' topics={['/topic/public']}
-                              onMessage={(msg) => {
-                                  console.log(msg);
-                              }}
+                              onMessage={(msg) => this.handleMessageReceived(msg)}
                               ref={(client) => {
                                   this.clientRef = client
                               }}/>
@@ -62,12 +63,13 @@ class App extends Component {
                 <LoginForm visible={visibleLoginForm}
                            onLogin={() => this.handleLogin()}
                            onChange={() => this.handleChange('userName')}> </LoginForm>
-                <Chat visible={!visibleLoginForm}
+                <Chat visible={!visibleLoginForm} messages={this.state.messages}
                       onChange={() => this.handleChange('messageText')}
                       onSendMessage={() => this.handleMessageSend()}></Chat>
             </React.Fragment>
         );
     }
+
 }
 
 export default App;

@@ -27,10 +27,28 @@ const styles = theme => ({
 
 class Chat extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            messageText: '',
+    formatMessage = msg => {
+        if (msg.type === 'JOIN') {
+            return (
+                <ListItem key={msg.timeStamp}>
+                    <Avatar><ChatIcon/></Avatar>
+                    <ListItemText>{msg.sender} logged in</ListItemText>
+                </ListItem>
+            )
+        } else if (msg.type === 'CHAT') {
+            return (
+                <ListItem key={msg.timeStamp}>
+                    <Avatar>{msg.sender[0]}</Avatar>
+                    <ListItemText>{msg.content}</ListItemText>
+                </ListItem>
+            )
+        } else if (msg.type === 'LEAVE') {
+            return (
+                <ListItem key={msg.timeStamp}>
+                    <Avatar><ChatIcon/></Avatar>
+                    <ListItemText>{msg.sender} left chat</ListItemText>
+                </ListItem>
+            )
         }
     }
 
@@ -40,6 +58,7 @@ class Chat extends Component {
             visible,
             onSendMessage,
             onChange,
+            messages,
         } = this.props;
 
         return (
@@ -47,22 +66,7 @@ class Chat extends Component {
                 <Grid container className={classes.root} spacing={16}>
                     <Grid item xs={12}>
                         <List>
-                            <ListItem>
-                                <Avatar><ChatIcon/></Avatar>
-                                <ListItemText>David logged in</ListItemText>
-                            </ListItem>
-                            <ListItem>
-                                <Avatar>D</Avatar>
-                                <ListItemText>Test text</ListItemText>
-                            </ListItem>
-                            <ListItem>
-                                <Avatar><ChatIcon/></Avatar>
-                                <ListItemText>John logged in</ListItemText>
-                            </ListItem>
-                            <ListItem>
-                                <Avatar>J</Avatar>
-                                <ListItemText>Test text 2</ListItemText>
-                            </ListItem>
+                            {messages.map(msg => this.formatMessage(msg))}
                         </List>
                     </Grid>
                     <Grid item xs={12} className={classes.bottom}>
