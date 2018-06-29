@@ -38,7 +38,7 @@ class Chat extends Component {
         } else if (msg.type === 'CHAT') {
             return (
                 <ListItem key={msg.timeStamp}>
-                    <Avatar>{msg.sender[0]}</Avatar>
+                    <Avatar>{msg.sender[0].toUpperCase()}</Avatar>
                     <ListItemText>{msg.content}</ListItemText>
                 </ListItem>
             )
