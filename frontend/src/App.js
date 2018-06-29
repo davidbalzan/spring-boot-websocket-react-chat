@@ -10,23 +10,30 @@ class App extends Component {
         super(props);
         this.state = {
             loggedIn: false,
-            messageText: null,
+            messageText: '',
             userName: null,
             messages: [],
+            loginFormInvalid: true,
         }
     }
 
     handleLogin = () => {
-        this.setState({loggedIn: true});
         if (this.state.userName) {
+            this.setState({loggedIn: true});
             this.clientRef.sendMessage("/app/chat.addUser",
                 JSON.stringify({sender: this.state.userName, type: 'JOIN'}));
+        } else {
+            this.setState({loginFormInvalid: true})
         }
     };
 
     handleLogout = () => {
-        this.setState({loggedIn: false});
-        //TODO do the actual logout
+        this.setState({
+            loggedIn: false,
+            messages: []
+        });
+        this.clientRef.disconnect();
+        this.clientRef.connect();
     }
 
     handleMessageSend = () => {
@@ -42,6 +49,13 @@ class App extends Component {
             [name]: event.target.value,
         });
     };
+
+    handleChangeUserName = () => event => {
+        this.setState({
+            userName: event.target.value,
+            loginFormInvalid: event.target.value.length < 3,
+        });
+    }
 
     handleMessageReceived = msg => {
         this.setState({messages: this.state.messages.concat(msg)});
@@ -61,9 +75,12 @@ class App extends Component {
                               }}/>
                 <Header onLogout={() => this.handleLogout()} showLogout={visibleLogout}></Header>
                 <LoginForm visible={visibleLoginForm}
+                           loginFornInvalid={this.state.loginFormInvalid}
                            onLogin={() => this.handleLogin()}
-                           onChange={() => this.handleChange('userName')}> </LoginForm>
-                <Chat visible={!visibleLoginForm} messages={this.state.messages}
+                           onChange={() => this.handleChangeUserName()}> </LoginForm>
+                <Chat visible={!visibleLoginForm}
+                      messages={this.state.messages}
+                      messageText={this.state.messageText}
                       onChange={() => this.handleChange('messageText')}
                       onSendMessage={() => this.handleMessageSend()}></Chat>
             </React.Fragment>

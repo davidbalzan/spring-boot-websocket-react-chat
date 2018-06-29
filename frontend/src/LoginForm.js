@@ -35,12 +35,14 @@ const styles = theme => ({
 });
 
 class LoginForm extends Component {
-    state = {
-        visible: true,
-    };
-
     render() {
-        const {classes, visible, onLogin, onChange} = this.props;
+        const {
+            classes,
+            visible,
+            onLogin,
+            onChange,
+            loginFornInvalid,
+        } = this.props;
 
         if (visible) {
             return (
@@ -62,7 +64,8 @@ class LoginForm extends Component {
                                                 onChange={onChange()}></TextField>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Button variant="contained" color="primary" className={classes.button}
+                                            <Button disabled={loginFornInvalid} variant="contained" color="primary"
+                                                    className={classes.button}
                                                     onClick={() => onLogin()}>Login</Button>
                                         </Grid>
                                     </Grid>

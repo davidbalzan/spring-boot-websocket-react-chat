@@ -59,6 +59,7 @@ class Chat extends Component {
             onSendMessage,
             onChange,
             messages,
+            messageText,
         } = this.props;
 
         return (
@@ -70,16 +71,21 @@ class Chat extends Component {
                         </List>
                     </Grid>
                     <Grid item xs={12} className={classes.bottom}>
-                        <Grid container>
-                            <Grid item xs={11}>
-                                <TextField fullWidth placeholder="Enter Text"
-                                           onChange={onChange()}></TextField>
+                        <form onSubmit={(event) => {
+                            onSendMessage();
+                            event.preventDefault();
+                        }}>
+                            <Grid container>
+                                <Grid item xs={11}>
+                                    <TextField fullWidth placeholder="Enter Text" value={messageText}
+                                               onChange={onChange()}></TextField>
+                                </Grid>
+                                <Grid item xs={1}>
+                                    <Button variant="contained" color="primary"
+                                            onClick={() => onSendMessage()}>Send</Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={1}>
-                                <Button variant="contained" color="primary"
-                                        onClick={() => onSendMessage()}>Send</Button>
-                            </Grid>
-                        </Grid>
+                        </form>
                     </Grid>
                 </Grid>
             </Fade>
