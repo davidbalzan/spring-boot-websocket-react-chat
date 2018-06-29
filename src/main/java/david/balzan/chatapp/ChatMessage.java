@@ -1,15 +1,16 @@
 package david.balzan.chatapp;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+import java.time.LocalDateTime;
+
+@Data
 public class ChatMessage {
     private String content;
     private String sender;
+    private LocalDateTime timeStamp = LocalDateTime.now();
 
-    public enum MessageType {LEAVE}
+    public enum MessageType {LEAVE, CHAT, JOIN}
 
     private MessageType type;
 }
