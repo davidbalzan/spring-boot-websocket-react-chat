@@ -66,9 +66,15 @@ class Chat extends Component {
             <Fade in={visible}>
                 <Grid container className={classes.root} spacing={16}>
                     <Grid item xs={12}>
-                        <List>
-                            {messages.map(msg => this.formatMessage(msg))}
-                        </List>
+                        <div style={{
+                            maxHeight: '600px', overflow: 'auto', position: 'sticky',
+                            display: 'flex',
+                            flexDirection: 'column-reverse'
+                        }}>
+                            <List>
+                                {messages.map(msg => this.formatMessage(msg))}
+                            </List>
+                        </div>
                     </Grid>
                     <Grid item xs={12} className={classes.bottom}>
                         <form onSubmit={(event) => {
