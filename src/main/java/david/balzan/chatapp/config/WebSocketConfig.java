@@ -1,4 +1,4 @@
-package david.balzan.chatapp;
+package david.balzan.chatapp.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

@@ -1,4 +1,4 @@
-package david.balzan.chatapp;
+package david.balzan.chatapp.model;
 
 import lombok.Data;
 
