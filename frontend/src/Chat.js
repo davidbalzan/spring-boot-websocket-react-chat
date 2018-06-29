@@ -22,6 +22,13 @@ const styles = theme => ({
         bottom: 2,
         width: '100%',
         margin: 10,
+    },
+    chatArea: {
+        maxHeight: '600px',
+        overflow: 'auto',
+        position: 'sticky',
+        display: 'flex',
+        flexDirection: 'column-reverse'
     }
 });
 
@@ -66,11 +73,7 @@ class Chat extends Component {
             <Fade in={visible}>
                 <Grid container className={classes.root} spacing={16}>
                     <Grid item xs={12}>
-                        <div style={{
-                            maxHeight: '600px', overflow: 'auto', position: 'sticky',
-                            display: 'flex',
-                            flexDirection: 'column-reverse'
-                        }}>
+                        <div className={classes.chatArea}>
                             <List>
                                 {messages.map(msg => this.formatMessage(msg))}
                             </List>
@@ -81,12 +84,12 @@ class Chat extends Component {
                             onSendMessage();
                             event.preventDefault();
                         }}>
-                            <Grid container>
-                                <Grid item xs={11}>
+                            <Grid container alignContent="center">
+                                <Grid item xs={10}>
                                     <TextField autoFocus fullWidth placeholder="Enter Text" value={messageText}
                                                onChange={onChange()}></TextField>
                                 </Grid>
-                                <Grid item xs={1}>
+                                <Grid item xs={2}>
                                     <Button variant="contained" color="primary"
                                             onClick={() => onSendMessage()}>Send</Button>
                                 </Grid>
