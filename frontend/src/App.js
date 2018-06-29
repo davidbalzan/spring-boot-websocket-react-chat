@@ -3,6 +3,7 @@ import LoginForm from './LoginForm.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from "./Header";
 import Chat from "./Chat";
+import SockJsClient from 'react-stomp';
 
 class App extends Component {
     constructor(props) {
@@ -17,6 +18,10 @@ class App extends Component {
     handleLogin = () => {
         this.setState({loggedIn: true});
         alert('User: ' + this.state.userName);
+        if (this.state.userName) {
+            this.clientRef.sendMessage("/app/chat.addUser",
+                JSON.stringify({sender: this.state.userName, type: 'JOIN'}));
+        }
     };
 
     handleLogout = () => {
@@ -26,7 +31,11 @@ class App extends Component {
 
     handleMessageSend = () => {
         alert('Sending message ' + this.state.messageText);
-        //TODO actual implementation
+        if (this.state.userName) {
+            this.clientRef.sendMessage("/app/chat.sendMessage",
+                JSON.stringify({sender: this.state.userName, content: this.state.messageText, type: 'CHAT'}));
+            this.setState({messageText: ''})
+        }
     }
 
     handleChange = name => event => {
@@ -42,6 +51,13 @@ class App extends Component {
         return (
             <React.Fragment>
                 <CssBaseline/>
+                <SockJsClient url='http://localhost:3000/ws' topics={['/topic/public']}
+                              onMessage={(msg) => {
+                                  console.log(msg);
+                              }}
+                              ref={(client) => {
+                                  this.clientRef = client
+                              }}/>
                 <Header onLogout={() => this.handleLogout()} showLogout={visibleLogout}></Header>
                 <LoginForm visible={visibleLoginForm}
                            onLogin={() => this.handleLogin()}

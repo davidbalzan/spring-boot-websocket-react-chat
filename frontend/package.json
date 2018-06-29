@@ -7,7 +7,8 @@
     "@material-ui/icons": "^1.1.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-stomp": "^3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -17,6 +18,18 @@
   },
   "proxy": {
     "/actuator": {
+      "target": "http://localhost:8080",
+      "ws": true
+    },
+    "/ws": {
+      "target": "http://localhost:8080",
+      "ws": true
+    },
+    "/topic": {
+      "target": "http://localhost:8080",
+      "ws": true
+    },
+    "/app": {
       "target": "http://localhost:8080",
       "ws": true
     }

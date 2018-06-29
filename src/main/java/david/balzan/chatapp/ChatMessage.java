@@ -1,15 +1,13 @@
 package david.balzan.chatapp;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ChatMessage {
     private String content;
     private String sender;
 
-    public enum MessageType {LEAVE}
+    public enum MessageType {LEAVE, CHAT, JOIN}
 
     private MessageType type;
 }
