@@ -39,13 +39,8 @@ class LoginForm extends Component {
         visible: true,
     };
 
-    handleLogin = () => {
-        this.setState({visible: false});
-    };
-
     render() {
-        const {classes} = this.props;
-        const {visible} = this.state;
+        const {classes, visible, onLogin} = this.props;
 
         if (visible) {
             return (
@@ -67,7 +62,7 @@ class LoginForm extends Component {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Button variant="contained" color="primary" className={classes.button}
-                                                    onClick={this.handleLogin}>Login</Button>
+                                                    onClick={() => onLogin()}>Login</Button>
                                         </Grid>
                                     </Grid>
                                 </form>
