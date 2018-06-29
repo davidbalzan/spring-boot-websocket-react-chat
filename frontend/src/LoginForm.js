@@ -48,7 +48,7 @@ class LoginForm extends Component {
             return (
                 <Fade in={visible}>
                     <Grid container className={classes.root} spacing={16} direction="column" align="center">
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <Paper elevation={4} className={classes.paper}>
                                 <form id="loginForm" name="loginForm" onSubmit={(event) => {
                                     if (!loginFornInvalid) {
@@ -62,6 +62,7 @@ class LoginForm extends Component {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                                autoFocus
                                                 id="name"
                                                 placeholder="Username"
                                                 autoComplete="off"

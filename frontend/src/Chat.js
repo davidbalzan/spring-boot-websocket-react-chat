@@ -77,7 +77,7 @@ class Chat extends Component {
                         }}>
                             <Grid container>
                                 <Grid item xs={11}>
-                                    <TextField fullWidth placeholder="Enter Text" value={messageText}
+                                    <TextField autoFocus fullWidth placeholder="Enter Text" value={messageText}
                                                onChange={onChange()}></TextField>
                                 </Grid>
                                 <Grid item xs={1}>
