@@ -50,7 +50,12 @@ class LoginForm extends Component {
                     <Grid container className={classes.root} spacing={16} direction="column" align="center">
                         <Grid item xs={6}>
                             <Paper elevation={4} className={classes.paper}>
-                                <form id="loginForm" name="loginForm">
+                                <form id="loginForm" name="loginForm" onSubmit={(event) => {
+                                    if (!loginFornInvalid) {
+                                        onLogin();
+                                    }
+                                    event.preventDefault();
+                                }}>
                                     <Grid container spacing={24}>
                                         <Grid item xs={12}>
                                             <Typography variant="title">Type your username</Typography>
