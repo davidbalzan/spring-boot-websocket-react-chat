@@ -40,7 +40,7 @@ class LoginForm extends Component {
     };
 
     render() {
-        const {classes, visible, onLogin} = this.props;
+        const {classes, visible, onLogin, onChange} = this.props;
 
         if (visible) {
             return (
@@ -58,7 +58,8 @@ class LoginForm extends Component {
                                                 id="name"
                                                 placeholder="Username"
                                                 autoComplete="off"
-                                                className={classes.textField}></TextField>
+                                                className={classes.textField}
+                                                onChange={onChange()}></TextField>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Button variant="contained" color="primary" className={classes.button}

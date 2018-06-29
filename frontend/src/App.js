@@ -9,12 +9,14 @@ class App extends Component {
         super(props);
         this.state = {
             loggedIn: false,
-            messageText: '',
+            messageText: null,
+            userName: null,
         }
     }
 
     handleLogin = () => {
         this.setState({loggedIn: true});
+        alert('User: ' + this.state.userName);
     };
 
     handleLogout = () => {
@@ -23,22 +25,30 @@ class App extends Component {
     }
 
     handleMessageSend = () => {
-        alert('Sending message');
+        alert('Sending message ' + this.state.messageText);
         //TODO actual implementation
     }
+
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
 
     render() {
         const visibleLoginForm = !this.state.loggedIn;
         const visibleLogout = this.state.loggedIn;
-        const messageText = this.state.messageText;
 
         return (
             <React.Fragment>
                 <CssBaseline/>
                 <Header onLogout={() => this.handleLogout()} showLogout={visibleLogout}></Header>
-                <LoginForm visible={visibleLoginForm} onLogin={() => this.handleLogin()}> </LoginForm>
-                <Chat visible={!visibleLoginForm} onSendMessage={() => this.handleMessageSend()}
-                      messageText={messageText}></Chat>
+                <LoginForm visible={visibleLoginForm}
+                           onLogin={() => this.handleLogin()}
+                           onChange={() => this.handleChange('userName')}> </LoginForm>
+                <Chat visible={!visibleLoginForm}
+                      onChange={() => this.handleChange('messageText')}
+                      onSendMessage={() => this.handleMessageSend()}></Chat>
             </React.Fragment>
         );
     }

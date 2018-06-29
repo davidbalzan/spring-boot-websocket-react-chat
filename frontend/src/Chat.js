@@ -27,12 +27,19 @@ const styles = theme => ({
 
 class Chat extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            messageText: '',
+        }
+    }
 
     render() {
         const {
             classes,
             visible,
-            onSendMessage
+            onSendMessage,
+            onChange,
         } = this.props;
 
         return (
@@ -62,7 +69,7 @@ class Chat extends Component {
                         <Grid container>
                             <Grid item xs={11}>
                                 <TextField fullWidth placeholder="Enter Text"
-                                           value={this.props.messageText}></TextField>
+                                           onChange={onChange()}></TextField>
                             </Grid>
                             <Grid item xs={1}>
                                 <Button variant="contained" color="primary"
