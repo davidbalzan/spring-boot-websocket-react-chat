@@ -28,6 +28,7 @@ const styles = theme => ({
         overflow: 'auto',
         position: 'sticky',
         display: 'flex',
+        textAlign: 'center',
         flexDirection: 'column-reverse'
     }
 });
@@ -84,12 +85,12 @@ class Chat extends Component {
                             onSendMessage();
                             event.preventDefault();
                         }}>
-                            <Grid container alignContent="center">
-                                <Grid item xs={10}>
+                            <Grid container>
+                                <Grid item sm={11} xs={12} align="center">
                                     <TextField autoFocus fullWidth placeholder="Enter Text" value={messageText}
                                                onChange={onChange()}></TextField>
                                 </Grid>
-                                <Grid item xs={2}>
+                                <Grid item sm={1} xs={12} align="center">
                                     <Button variant="contained" color="primary"
                                             onClick={() => onSendMessage()}>Send</Button>
                                 </Grid>
